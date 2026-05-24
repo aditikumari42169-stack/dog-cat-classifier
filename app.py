@@ -20,7 +20,6 @@ if uploaded_file is not None:
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0
 
-    try:
     prediction = model.predict(img_array)
 
     st.write("Raw Prediction:", prediction)
