@@ -13,20 +13,24 @@ uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     img = Image.open(uploaded_file)
-    st.image(img, caption="Uploaded Image", use_column_width=True)
+    st.image(img, caption="Uploaded Image", width=500)
 
     img = img.resize((224,224))
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0
 
+    try:
     prediction = model.predict(img_array)
 
-pred_value = float(prediction[0])
+    st.write("Raw Prediction:", prediction)
 
-st.write(pred_value)
+    pred_value = prediction[0][0]
 
-if pred_value > 0.5:
-    st.success("Prediction: Cat 🐱")
-else:
-    st.success("Prediction: Dog 🐶")
+    if pred_value > 0.5:
+        st.success("Prediction: Cat 🐱")
+    else:
+        st.success("Prediction: Dog 🐶")
+
+except Exception as e:
+    st.error(f"Error: {e}")
