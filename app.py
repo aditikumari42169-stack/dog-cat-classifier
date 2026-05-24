@@ -21,7 +21,12 @@ if uploaded_file is not None:
     img_array = img_array / 255.0
 
     prediction = model.predict(img_array)
-if prediction[0][0] > 0.5:
+
+pred_value = float(prediction[0])
+
+st.write(pred_value)
+
+if pred_value > 0.5:
     st.success("Prediction: Cat 🐱")
 else:
     st.success("Prediction: Dog 🐶")
